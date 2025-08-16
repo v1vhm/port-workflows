@@ -36,7 +36,7 @@ resource "azurerm_storage_account" "storage_account" {
 
 resource "port_entity" "azure_storage_account" {
   count      = length(azurerm_storage_account.storage_account) > 0 ? 1 : 0
-  identifier = var.storage_account_name
+  identifier = lower(var.storage_account_name)
   title      = var.storage_account_name
   blueprint  = "azureStorageAccount"
   run_id     = var.port_run_id

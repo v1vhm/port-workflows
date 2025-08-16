@@ -50,6 +50,9 @@ jobs:
           organizationName: ${{ env.ORG_NAME }}
           createPortEntity: false
 
+      - name: Set service name lowercase
+        run: echo "SERVICE_NAME_LC=${{ inputs.service_name }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+
 
       - name: Create Service in Port with Repository Relation
         uses: port-labs/port-github-action@v1
@@ -58,7 +61,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          identifier: "${{ inputs.service_name }}_service"
+          identifier: "${{ env.SERVICE_NAME_LC }}_service"
           title: "${{ inputs.service_name }} Service"
           blueprint: "service"
           relations: |
